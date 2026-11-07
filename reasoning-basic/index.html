@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>事理與事例｜AI 思辨學習工作坊（基礎版）</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei",sans-serif;color:#29463a;background:#f6f9f4}*{box-sizing:border-box}body{margin:0;line-height:1.7}header{background:linear-gradient(125deg,#dceee1,#fff0ce);padding:30px 16px}header .wrap,main{max-width:850px;margin:auto}header h1{font-size:clamp(27px,5vw,38px);margin:3px 0}header p{margin:0;color:#526b5c}.tag{color:#346e4d;font-weight:800;font-size:14px}main{padding:15px 14px 64px}.panel{background:#fff;border:1px solid #dce8da;border-radius:20px;padding:clamp(17px,4vw,27px);margin:15px 0;box-shadow:0 5px 22px #355c4010}.heading{display:flex;gap:11px;align-items:center}.num{display:grid;place-items:center;background:#d8e9de;color:#256041;font-weight:900;width:43px;height:43px;border-radius:12px;font-size:23px}.heading h2{margin:0;font-size:23px}.helper{margin:10px 0 16px;color:#557062}.label{font-weight:800;font-size:17px;margin:17px 0 7px;display:block}textarea,input,select{width:100%;font:inherit;font-size:17px;border-radius:12px;border:2px solid #ccddcf;background:white;color:#244235;padding:12px 14px;min-height:49px}textarea{resize:vertical;min-height:100px}textarea:focus,input:focus,select:focus{outline:3px solid #b8ddc5;outline-offset:0}textarea[readonly]{background:#f5f8f4}.examples{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#f2f7ec;border:1px solid #d0e3d0;color:#2e5c40;font-weight:700;padding:10px 13px;border-radius:999px;cursor:pointer;font-size:15px}.tip{background:#fff8e7;border:1px solid #efdfb7;color:#66542e;border-radius:12px;padding:12px 14px;margin:13px 0}.guide{background:#edf6ed;border-radius:13px;padding:12px 15px;margin:12px 0}.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}button{font:inherit;font-weight:800;min-height:48px;border:0;border-radius:12px;padding:11px 18px;cursor:pointer}.mainbtn{background:#2e7753;color:white}.lightbtn{background:#e7f1e5;color:#2b6041}.outline{background:white;border:1px solid #b9d0c1;color:#306247}.choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.choice{border:1.5px solid #d3e2d4;border-radius:13px;padding:10px;background:#fcfdfa;display:flex;align-items:center;gap:9px;font-weight:700;cursor:pointer}.choice input{width:20px;min-height:20px;height:20px;accent-color:#328354;margin:0}.small{color:#62776c;font-size:14px}.status{min-height:26px;margin-top:10px;color:#276945;font-weight:700}.result{background:#f5f8f2;border:1px solid #dae6d8;border-radius:14px;padding:15px;white-space:pre-wrap;min-height:85px;overflow-wrap:anywhere}.note{font-size:14px;color:#5c7164}.fieldrow{display:grid;grid-template-columns:1fr 1fr;gap:12px}.meter{font-weight:800;color:#376d4e;margin:16px 0 4px}.muted{color:#6b7c71}footer{padding:8px 0;font-size:13px;color:#66796d}@media(max-width:600px){.choices,.fieldrow{grid-template-columns:1fr}.btns button{width:100%}}@media print{header{padding:12px}.panel{break-inside:avoid;box-shadow:none}button,.btns,.chip,footer,.tip{display:none}body{background:white}main{padding:0}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="tag">小六中文科 · 分層學習 · 基礎版</div><h1>事理與事例｜AI 小助手</h1><p>寫一句道理 → 請 AI 舉例 → 想一想、改一改</p></div></header>
+<main>
+<section class="panel">
+  <div class="heading"><div class="num">1</div><h2>寫出我想說明的事理</h2></div>
+  <p class="helper">請在下面寫出你想說明的道理。</p>
+  <label class="label" for="idea">我要說明的事理</label>
+  <textarea id="idea" rows="2" placeholder="例如：堅持不懈能幫助我們克服困難。"></textarea>
+  <div class="guide">💡 提示：事理要是一句完整的話，不只是「堅持」或「合作」兩個字。</div>
+</section>
+<section class="panel">
+  <div class="heading"><div class="num">2</div><h2>請 AI 給我一個事例</h2></div>
+  <p class="helper">按「複製 AI 指令」，到老師指定的 AI 平台貼上。</p>
+  <div class="btns"><button id="make" class="mainbtn" type="button">📋 複製 AI 指令</button><button id="showPrompt" class="lightbtn" type="button">👀 查看指令</button></div>
+  <div id="promptArea" hidden><label class="label" for="prompt">給 AI 的指令</label><textarea id="prompt" rows="8" readonly></textarea></div>
+  <div class="tip">AI 的回答不一定是真實事件。請留意它有沒有把「想像的故事」當成「真實發生的事」。</div>
+  <label class="label" for="example">把 AI 的事例貼在這裏</label>
+  <textarea id="example" rows="5" placeholder="長按這個方格，選擇「貼上」。老師也可以協助。"></textarea>
+</section>
+<section class="panel">
+  <div class="heading"><div class="num">3</div><h2>我是小小審稿員</h2></div>
+  <p class="helper">用簡單的選擇題，想想 AI 的事例是否合適。</p>
+  <label class="label">① 這個事例能說明我的事理嗎？</label>
+  <div class="choices"><label class="choice"><input type="radio" name="fit" value="能">✅ 能</label><label class="choice"><input type="radio" name="fit" value="不太能">🤔 不太能</label></div>
+  <label class="label">② 這個事例是真實的嗎？</label>
+  <div class="choices"><label class="choice"><input type="radio" name="truth" value="虛構故事">📖 想像的故事</label><label class="choice"><input type="radio" name="truth" value="已查證的真實事件">🔎 已查證是真事</label><label class="choice"><input type="radio" name="truth" value="不確定，尚未查證">❓ 不確定</label></div>
+  <div class="guide">💡 「不確定」是可以選的！如果是關於真實人物或歷史的事例，要查證後才可以說它是真的。</div>
+  <label class="label">③ 用自己的話改寫一句</label>
+  <div class="small">你可以跟着句式：「這個事例說明了＿＿＿＿，因為＿＿＿＿。」</div>
+  <div class="fieldrow"><div><label class="label" for="meaning">這個事例說明了……</label><input id="meaning" placeholder="例如：堅持的重要"></div><div><label class="label" for="because">因為……</label><input id="because" placeholder="例如：他努力練習，沒有放棄"></div></div>
+  <label class="label" for="rewrite">我用自己的話寫出事例（可請老師協助）</label>
+  <textarea id="rewrite" rows="4" placeholder="例如：小明每天努力練跑，即使失敗也沒有放棄。後來，他終於取得進步。"></textarea>
+  <div class="btns"><button class="lightbtn" id="scaffold" type="button">✨ 幫我組合句子</button></div>
+  <label class="label">④ 我的學習紀錄</label>
+  <div id="result" class="result" aria-live="polite">按下面的「整理我的答案」，就能看到你完成的內容。</div>
+  <div class="btns"><button class="mainbtn" id="generate" type="button">📝 整理我的答案</button><button class="lightbtn" id="download" type="button">⬇ 下載學習紀錄</button><button class="outline" id="copyrecord" type="button">📋 複製紀錄</button><button class="outline" id="clear" type="button">重新開始</button></div>
+  <div class="status" id="status" role="status" aria-live="polite"></div>
+</section>
+<footer>教學說明：本網頁沒有連接 AI，也不需要 API Key。AI 指令需要貼到學校指定的平台。填寫的內容只在目前瀏覽器中處理，不會由本網頁上傳；離開前請下載紀錄。請勿輸入學生姓名或其他個人資料。</footer>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const value=id=>$(id).value.trim();
+const radio=name=>document.querySelector('input[name="'+name+'"]:checked')?.value || '未選擇';
+const status=t=>$('status').textContent=t;
+function prompt(){return `我是一名香港小學六年級學生。請用簡單、清楚的繁體中文，為下面這句事理提供「一個」貼近日常生活的虛構事例（約60至90字）。\n\n我的事理：「${value('idea')}」\n\n請按以下方式回答：\n1. 事例（人物遇到甚麼事、做了甚麼、結果如何）。\n2. 用一句話說明為甚麼事例能支持事理。\n3. 標示「這是虛構生活情境，不是真實事件」。\n\n請勿編造真實人物、年份、數字或資料來源，也不要直接替我寫完整作文。`;}
+async function copyText(text){try{await navigator.clipboard.writeText(text);status('已複製！可以貼到 AI 平台。')}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();let ok=document.execCommand('copy');t.remove();if(!ok){$('promptArea').hidden=false;status('無法自動複製，請長按指令方格選「全選」及「複製」。')}else status('已複製！')}}
+function ensure(){if(!value('idea')){status('請先在第一部分輸入事理。');$('idea').focus();return false}return true}
+$('make').addEventListener('click',()=>{if(!ensure())return;$('prompt').value=prompt();copyText($('prompt').value)});
+$('showPrompt').addEventListener('click',()=>{if(!ensure())return;$('prompt').value=prompt();$('promptArea').hidden=false;status('已顯示完整指令。')});
+$('scaffold').addEventListener('click',()=>{const m=value('meaning'),b=value('because');if(!m&&!b){status('請先填寫「說明了」和「因為」。');return}const s=`這個事例說明了${m||'＿＿＿＿'}，因為${b||'＿＿＿＿'}。`;if(value('rewrite'))$('rewrite').value=value('rewrite')+'\n'+s;else $('rewrite').value=s;status('已組合句子！你可以繼續修改成自己的話。')});
+function report(){return `事理與事例｜AI 小助手（基礎版）\n===========================\n我想說明的事理：\n${value('idea')||'未填寫'}\n\nAI 提供的事例：\n${value('example')||'未填寫'}\n\n事例能支持事理嗎？${radio('fit')}\n事例是否真實？${radio('truth')}\n\n我認為這個事例說明了：${value('meaning')||'未填寫'}\n因為：${value('because')||'未填寫'}\n\n我用自己的話寫的事例：\n${value('rewrite')||'未填寫'}\n\n提醒：AI 回答不能代替查證。`}
+$('generate').addEventListener('click',()=>{$('result').textContent=report();status('已整理完成，請檢查答案。')});
+$('copyrecord').addEventListener('click',()=>copyText(report()));
+$('download').addEventListener('click',()=>{const blob=new Blob(['\ufeff'+report()],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='事理與事例_基礎版_學習紀錄.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);status('學習紀錄已下載，請檢查「下載項目」。')});
+$('clear').addEventListener('click',()=>{if(!confirm('確定清除所有答案？請先下載學習紀錄。'))return;document.querySelectorAll('input[type="text"],textarea').forEach(e=>e.value='');document.querySelectorAll('input[type="radio"]').forEach(e=>e.checked=false);$('result').textContent='按下面的「整理我的答案」，就能看到你完成的內容。';$('promptArea').hidden=true;status('已清除。')});
+</script>
+</body></html>
