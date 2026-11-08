@@ -18,7 +18,7 @@
   <div class="guide">💡 提示：事理要是一句完整的話，不只是「堅持」或「合作」兩個字。</div>
 </section>
 <section class="panel">
-  <div class="heading"><div class="num">2</div><h2>請 AI 給我一個真實事例</h2></div>
+  <div class="heading"><div class="num">2</div><h2>請 AI 給我兩個真實事例</h2></div>
   <p class="helper">按「複製 AI 指令」，到老師指定的 AI 平台貼上。</p>
   <div class="fieldrow"><div><label class="label" for="era">事例年代</label><select id="era"><option value="古代">古代</option><option value="現代">現代</option></select></div><div><label class="label" for="region">事例地區</label><select id="region"><option value="中國">中國</option><option value="外國">外國</option></select></div></div>
   <div class="guide">只使用有可靠資料支持的真實人物或事件。請先選擇年代和地區，再複製指令。</div>
@@ -33,18 +33,19 @@
   <p class="helper">用簡單的選擇題，想想 AI 的事例是否合適。</p>
   <label class="label">① 這個事例能說明我的事理嗎？</label>
   <div class="choices"><label class="choice"><input type="radio" name="fit" value="能">✅ 能</label><label class="choice"><input type="radio" name="fit" value="不太能">🤔 不太能</label></div>
-  <label class="label">② 這個事例是真實的嗎？</label>
-  <div class="choices"><label class="choice"><input type="radio" name="truth" value="有錯誤或缺乏可靠證據，需更換事例">⚠️ 有疑點，需更換</label><label class="choice"><input type="radio" name="truth" value="已查證的真實事件">🔎 已查證是真事</label><label class="choice"><input type="radio" name="truth" value="不確定，尚未查證">❓ 不確定</label></div>
-  <div class="guide">💡 「不確定」是可以選的！如果是關於真實人物或歷史的事例，要查證後才可以說它是真的。</div>
-  <label class="label" for="sources">我的查證來源／結果</label>
-  <textarea id="sources" rows="3" placeholder="貼上核對過的來源網址或書名，簡單寫下查證結果。"></textarea>
-  <label class="label">③ 用自己的話改寫一句</label>
+  <h3>分層任務一：用自己的話改寫一至兩句</h3>
+  <div class="guide"><strong>第一層・找重點：</strong>從兩個事例中選一個，找出「人物、行動、結果」。<br><strong>第二層・試改寫：</strong>遮蓋 AI 原文，用自己的話寫一至兩句。<br><strong>第三層・扣回事理：</strong>想想人物的行動怎樣支持事理，再檢查句子是否通順。</div>
   <div class="small">你可以跟着句式：「這個事例說明了＿＿＿＿，因為＿＿＿＿。」</div>
   <div class="fieldrow"><div><label class="label" for="meaning">這個事例說明了……</label><input id="meaning" placeholder="例如：堅持的重要"></div><div><label class="label" for="because">因為……</label><input id="because" placeholder="例如：他努力練習，沒有放棄"></div></div>
-  <label class="label" for="rewrite">我用自己的話寫出事例（可請老師協助）</label>
+  <label class="label" for="rewrite">我用自己的話改寫一至兩句（可請老師協助）</label>
   <textarea id="rewrite" rows="4" placeholder="先交代真實人物或事件，再寫出已查證的行動和結果。不要加入想像的細節。"></textarea>
   <div class="btns"><button class="lightbtn" id="scaffold" type="button">✨ 幫我組合句子</button></div>
-  <label class="label">④ 我的學習紀錄</label>
+  <h3>分層任務二：利用 AI 提供的資料優化實體魚骨圖</h3>
+  <div class="guide"><strong>第一層・選資料：</strong>從 AI 的兩個真實事例中，選出能支持中心事理的資料。<br><strong>第二層・補魚骨：</strong>在紙本魚骨圖的分支補上人物、具體行動及結果，以關鍵詞記錄。<br><strong>第三層・連道理：</strong>在魚骨旁補寫「這個事例如何支持中心事理」，刪去不切題或重複的資料。</div>
+  <p class="small">請直接在實體魚骨圖上修改，再在下面簡單記下改動。</p>
+  <label class="label" for="fishboneNotes">我在實體魚骨圖新增或修改了甚麼？</label>
+  <textarea id="fishboneNotes" rows="3" placeholder="例如：在人物分支補上具體行動和結果，並加上一句連結中心道理的說明。"></textarea>
+  <label class="label">我的學習紀錄</label>
   <div id="result" class="result" aria-live="polite">按下面的「整理我的答案」，就能看到你完成的內容。</div>
   <div class="btns"><button class="mainbtn" id="generate" type="button">📝 整理我的答案</button><button class="lightbtn" id="download" type="button">⬇ 下載學習紀錄</button><button class="outline" id="copyrecord" type="button">📋 複製紀錄</button><button class="outline" id="clear" type="button">重新開始</button></div>
   <div class="status" id="status" role="status" aria-live="polite"></div>
@@ -57,7 +58,7 @@ const $=id=>document.getElementById(id);
 const value=id=>$(id).value.trim();
 const radio=name=>document.querySelector('input[name="'+name+'"]:checked')?.value || '未選擇';
 const status=t=>$('status').textContent=t;
-function prompt(){return `我是一名香港小學六年級學生。請用簡單、清楚的繁體中文，為下面這句事理提供「一個」可查證的真實人物或真實事件事例（事例正文約60至90字）。
+function prompt(){return `我是一名香港小學六年級學生。請用簡單、清楚的繁體中文，為下面這句事理提供「兩個不同的」可查證的真實人物或真實事件事例（每個事例正文約60至90字）。
 
 我的事理：「${value('idea')}」
 事例年代：${value('era')}
@@ -71,19 +72,30 @@ function prompt(){return `我是一名香港小學六年級學生。請用簡單
 5. 若找不到符合分類而且有可靠來源的事例，請明確說「未找到可靠的真實事例」，不要用虛構內容填補，也不要擅自更換分類。
 
 【回答格式】
+請分別以「事例一」和「事例二」列出以下內容：
 1. 真實人物／事件、朝代或年份、國家／地區。
 2. 事例：人物遇到甚麼事、做了甚麼、結果如何。
 3. 用一句話說明為甚麼事例能支持事理。
 4. 查證來源：至少一個可追查的可靠來源，列出機構／作者、文章或書名；有已確認的網頁連結才列出，不可猜測網址。說明來源支持哪項事實。
 5. 尚需核實的內容：如有疑點，清楚指出。
 
-不要直接替我寫完整作文。`;}
+【分層提示】
+完成兩個事例後，按由淺入深的層次提供提示，不要代替我完成任務：
+任務一：用自己的話改寫一至兩句。
+第一層：用問題引導我找出人物、行動和結果。
+第二層：提供有留白的句式支架，讓我自行改寫一至兩句。
+第三層：提出一個問題，引導我把事例連結到中心事理。
+任務二：利用你提供的資料優化實體魚骨圖。
+第一層：引導我選取切題的資料。
+第二層：提示我在紙本魚骨圖的「人物、行動、結果」分支補充關鍵詞。
+第三層：引導我補上與中心事理的連繫，刪去重複或不切題的資料。
+不要直接替我寫完整作文，也不要替我完成改寫或整張魚骨圖。`;}
 async function copyText(text){try{await navigator.clipboard.writeText(text);status('已複製！可以貼到 AI 平台。')}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();let ok=document.execCommand('copy');t.remove();if(!ok){$('promptArea').hidden=false;status('無法自動複製，請長按指令方格選「全選」及「複製」。')}else status('已複製！')}}
 function ensure(){if(!value('idea')){status('請先在第一部分輸入事理。');$('idea').focus();return false}return true}
 $('make').addEventListener('click',()=>{if(!ensure())return;$('prompt').value=prompt();copyText($('prompt').value)});
 $('showPrompt').addEventListener('click',()=>{if(!ensure())return;$('prompt').value=prompt();$('promptArea').hidden=false;status('已顯示完整指令。')});
 $('scaffold').addEventListener('click',()=>{const m=value('meaning'),b=value('because');if(!m&&!b){status('請先填寫「說明了」和「因為」。');return}const s=`這個事例說明了${m||'＿＿＿＿'}，因為${b||'＿＿＿＿'}。`;if(value('rewrite'))$('rewrite').value=value('rewrite')+'\n'+s;else $('rewrite').value=s;status('已組合句子！你可以繼續修改成自己的話。')});
-function report(){return `事理與事例｜AI 小助手（基礎版）\n===========================\n我想說明的事理：\n${value('idea')||'未填寫'}\n\n事例年代：${value('era')}\n事例地區：${value('region')}\n\nAI 提供的真實事例：\n${value('example')||'未填寫'}\n\n事例能支持事理嗎？${radio('fit')}\n事例是否真實？${radio('truth')}\n查證來源／結果：${value('sources')||'未填寫'}\n\n我認為這個事例說明了：${value('meaning')||'未填寫'}\n因為：${value('because')||'未填寫'}\n\n我用自己的話寫的事例：\n${value('rewrite')||'未填寫'}\n\n提醒：AI 回答不能代替查證。`}
+function report(){return `事理與事例｜AI 小助手（基礎版）\n===========================\n我想說明的事理：\n${value('idea')||'未填寫'}\n\n事例年代：${value('era')}\n事例地區：${value('region')}\n\nAI 提供的真實事例：\n${value('example')||'未填寫'}\n\n事例能支持事理嗎？${radio('fit')}\n\n我認為這個事例說明了：${value('meaning')||'未填寫'}\n因為：${value('because')||'未填寫'}\n\n分層任務一：用自己的話改寫一至兩句：\n${value('rewrite')||'未填寫'}\n\n分層任務二：利用 AI 資料優化實體魚骨圖\n我的修改：${value('fishboneNotes')||'未填寫'}\n\n提醒：AI 回答不能代替查證。`}
 $('generate').addEventListener('click',()=>{$('result').textContent=report();status('已整理完成，請檢查答案。')});
 $('copyrecord').addEventListener('click',()=>copyText(report()));
 $('download').addEventListener('click',()=>{const blob=new Blob(['\ufeff'+report()],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='事理與事例_基礎版_學習紀錄.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);status('學習紀錄已下載，請檢查「下載項目」。')});
