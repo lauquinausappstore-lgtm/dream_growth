@@ -88,17 +88,7 @@ function prompt(){return `我是一名香港小學六年級學生。請用簡單
 4. 查證來源：至少一個可追查的可靠來源，列出機構／作者、文章或書名；有已確認的網頁連結才列出，不可猜測網址。說明來源支持哪項事實。
 5. 尚需核實的內容：如有疑點，清楚指出。
 
-【分層提示】
-完成兩個事例後，按由淺入深的層次提供提示，不要代替我完成任務：
-任務一：用自己的話改寫一至兩句。
-第一層：用問題引導我找出人物、行動和結果。
-第二層：提供有留白的句式支架，讓我自行改寫一至兩句。
-第三層：提出一個問題，引導我把事例連結到中心事理。
-任務二：利用你提供的資料優化實體魚骨圖。
-第一層：引導我選取切題的資料。
-第二層：提示我在紙本魚骨圖的「人物、行動、結果」分支補充關鍵詞。
-第三層：引導我補上與中心事理的連繫，刪去重複或不切題的資料。
-不要直接替我寫完整作文，也不要替我完成改寫或整張魚骨圖。`;}
+不要直接替我寫完整作文。`;}
 async function copyText(text){try{await navigator.clipboard.writeText(text);status('已複製！可以貼到 AI 平台。')}catch(e){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();let ok=document.execCommand('copy');t.remove();if(!ok){$('promptArea').hidden=false;status('無法自動複製，請長按指令方格選「全選」及「複製」。')}else status('已複製！')}}
 function ensure(){if(!value('idea')){status('請先在第一部分輸入事理。');$('idea').focus();return false}return true}
 $('make').addEventListener('click',()=>{if(!ensure())return;$('prompt').value=prompt();copyText($('prompt').value)});
