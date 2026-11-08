@@ -35,21 +35,28 @@
   <p class="helper">用簡單的選擇題，想想 AI 的事例是否合適。</p>
   <label class="label">① 這個事例能說明我的事理嗎？</label>
   <div class="choices"><label class="choice"><input type="radio" name="fit" value="能">✅ 能</label><label class="choice"><input type="radio" name="fit" value="不太能">🤔 不太能</label></div>
+  <label class="label" for="taskChoice">分層任務：選做其中一項即可</label>
+  <select id="taskChoice"><option value="rewrite">任務一：用自己的話改寫一至兩句</option><option value="fishbone">任務二：利用 AI 資料優化實體魚骨圖</option></select>
+  <p class="small">選擇適合自己的任務。提示會帶入你的中心思想及貼上的事例；完成其中一項即可。</p>
+  <div id="rewriteTask">
   <h3>分層任務一：用自己的話改寫一至兩句</h3>
   <p class="helper">先自行改寫；有需要時才按提示鍵，取得句式架構或思考方向。</p>
   <div class="btns"><button class="lightbtn" id="rewriteHint1Btn" type="button" aria-expanded="false" aria-controls="rewriteHint1">獲取第一層提示</button><button class="outline" id="rewriteHint2Btn" type="button" aria-expanded="false" aria-controls="rewriteHint2">獲取第二層提示</button></div>
-  <div class="guide" id="rewriteHint1" hidden><strong>第一層：句式架構</strong><p>「＿＿＿＿（人物）遇到＿＿＿＿，他／她＿＿＿＿（行動），結果＿＿＿＿。」</p><p>「這個事例說明了＿＿＿＿，因為＿＿＿＿。」</p><button class="outline" id="copyRewriteHint" type="button">複製句式提示</button></div>
-  <div class="guide" id="rewriteHint2" hidden><strong>第二層：改寫方向</strong><ul><li>從兩個事例中選一個最切題的，圈出人物、行動和結果。</li><li>遮蓋 AI 原文，用自己的話交代「誰、做了甚麼、結果如何」。</li><li>用「雖然……但是……」「因為……所以……」連接重點，不必全部使用。</li><li>最後想一想：哪個行動最能說明中心事理？刪去不相關細節。</li></ul></div>
+  <div class="guide" id="rewriteHint1" hidden><strong>第一層：句式架構</strong><div id="rewriteContext1" class="result"></div><p>「＿＿＿＿（人物）遇到＿＿＿＿，他／她＿＿＿＿（行動），結果＿＿＿＿。」</p><p>「這個事例說明了＿＿＿＿，因為＿＿＿＿。」</p><button class="outline" id="copyRewriteHint" type="button">複製句式提示</button></div>
+  <div class="guide" id="rewriteHint2" hidden><strong>第二層：改寫方向</strong><div id="rewriteContext2" class="result"></div><ul><li>從兩個事例中選一個最切題的，圈出人物、行動和結果。</li><li>遮蓋 AI 原文，用自己的話交代「誰、做了甚麼、結果如何」。</li><li>用「雖然……但是……」「因為……所以……」連接重點，不必全部使用。</li><li>最後想一想：哪個行動最能說明中心事理？刪去不相關細節。</li></ul></div>
   <div class="fieldrow"><div><label class="label" for="meaning">這個事例說明了……</label><input id="meaning" placeholder="例如：堅持的重要"></div><div><label class="label" for="because">因為……</label><input id="because" placeholder="例如：他努力練習，沒有放棄"></div></div>
   <label class="label" for="rewrite">我用自己的話改寫一至兩句（可請老師協助）</label>
   <textarea id="rewrite" rows="4" placeholder="先交代真實人物或事件，再寫出已查證的行動和結果。不要加入想像的細節。"></textarea>
   <div class="btns"><button class="lightbtn" id="scaffold" type="button">✨ 幫我組合句子</button></div>
+  </div>
+  <div id="fishboneTask" hidden>
   <h3>分層任務二：利用 AI 提供的資料優化實體魚骨圖</h3>
   <p class="helper">先嘗試把 AI 資料整理到紙本魚骨圖；有需要時按鍵，把資料分成中心句與事例兩部分，再自行選取關鍵詞。</p>
   <div class="btns"><button class="lightbtn" id="fishHintBtn" type="button" aria-expanded="false" aria-controls="fishHintPanel">獲取提示：整理成中心句與事例</button><button class="outline" id="copyFishHint" type="button" hidden>複製整理結果</button></div>
   <div id="fishHintPanel" hidden><div class="fieldrow"><div><h4>主幹（中心句／事理）</h4><div class="result" id="fishThesis"></div></div><div><h4>魚刺（事例與做法）</h4><div class="result" id="fishExamples"></div></div></div><div class="guide">主幹寫中心事理，魚刺分別記錄事例一、事例二的人物、行動和結果，再補上與事理的連繫。下方顯示的是你貼上的 AI 資料，請自行篩選，不要整段照抄。</div></div>
   <label class="label" for="fishboneNotes">我在實體魚骨圖新增或修改了甚麼？</label>
   <textarea id="fishboneNotes" rows="3" placeholder="例如：在人物分支補上具體行動和結果，並加上一句連結中心道理的說明。"></textarea>
+  </div>
   <label class="label">我的學習紀錄</label>
   <div id="result" class="result" aria-live="polite">按下面的「整理我的答案」，就能看到你完成的內容。</div>
   <div class="btns"><button class="mainbtn" id="generate" type="button">📝 整理我的答案</button><button class="lightbtn" id="download" type="button">⬇ 下載學習紀錄</button><button class="outline" id="copyrecord" type="button">📋 複製紀錄</button><button class="outline" id="clear" type="button">重新開始</button></div>
@@ -65,6 +72,18 @@ const radio=name=>document.querySelector('input[name="'+name+'"]:checked')?.valu
 const status=t=>$('status').textContent=t;
 $('ideaChoice').addEventListener('change',()=>{$('idea').value=value('ideaChoice');$('prompt').value='';$('promptArea').hidden=true;status('已選擇段落中心思想，請重新複製 AI 指令。')});
 const usedHints=new Set();
+function refreshContext(){
+ const idea=value('idea')||'（請先選擇中心思想）',raw=value('example');
+ const context='中心思想：'+idea+'\n\n你貼上的事例：\n'+(raw||'（貼上 AI 的兩個事例後，這裏會自動顯示。）');
+ $('rewriteContext1').textContent=context+'\n\n選其中一個事例：誰？做了甚麼？結果如何？把這些重點填入下方句式。';
+ $('rewriteContext2').textContent=context+'\n\n回看以上事例：哪項具體行動最能說明「'+idea+'」？用自己的話解釋，不要新增原文沒有的事實。';
+ $('fishThesis').textContent=idea;$('fishExamples').textContent=raw||'（請先貼上 AI 事例）';
+}
+function switchTask(){const fish=value('taskChoice')==='fishbone';$('rewriteTask').hidden=fish;$('fishboneTask').hidden=!fish;refreshContext()}
+$('taskChoice').addEventListener('change',switchTask);
+['idea','example'].forEach(id=>$(id).addEventListener('input',refreshContext));
+$('ideaChoice').addEventListener('change',refreshContext);
+refreshContext();
 for(const n of [1,2])$('rewriteHint'+n+'Btn').addEventListener('click',()=>{const btn=$('rewriteHint'+n+'Btn'),panel=$('rewriteHint'+n);panel.hidden=!panel.hidden;btn.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)usedHints.add('改寫第'+n+'層提示')});
 $('copyRewriteHint').addEventListener('click',()=>copyText('＿＿＿＿（人物）遇到＿＿＿＿，他／她＿＿＿＿（行動），結果＿＿＿＿。\n這個事例說明了＿＿＿＿，因為＿＿＿＿。'));
 function fishText(){return '【主幹｜中心句／事理】\n'+value('idea')+'\n\n【魚刺｜事例與做法（請自行選取關鍵詞）】\n'+value('example')}
@@ -99,10 +118,10 @@ function ensure(){if(!value('idea')){status('請先在第一部分輸入事理�
 $('make').addEventListener('click',()=>{if(!ensure())return;$('prompt').value=prompt();copyText($('prompt').value)});
 $('showPrompt').addEventListener('click',()=>{if(!ensure())return;$('prompt').value=prompt();$('promptArea').hidden=false;status('已顯示完整指令。')});
 $('scaffold').addEventListener('click',()=>{const m=value('meaning'),b=value('because');if(!m&&!b){status('請先填寫「說明了」和「因為」。');return}const s=`這個事例說明了${m||'＿＿＿＿'}，因為${b||'＿＿＿＿'}。`;if(value('rewrite'))$('rewrite').value=value('rewrite')+'\n'+s;else $('rewrite').value=s;status('已組合句子！你可以繼續修改成自己的話。')});
-function report(){return `事理與事例｜AI 小助手（基礎版）\n===========================\n文章題目：提高寫作能力的秘訣\n段落中心思想／事理：\n${value('idea')||'未填寫'}\n\n事例年代：${value('era')}\n事例地區：${value('region')}\n\nAI 提供的真實事例：\n${value('example')||'未填寫'}\n\n事例能支持事理嗎？${radio('fit')}\n\n我認為這個事例說明了：${value('meaning')||'未填寫'}\n因為：${value('because')||'未填寫'}\n\n分層任務一：用自己的話改寫一至兩句：\n${value('rewrite')||'未填寫'}\n\n分層任務二：利用 AI 資料優化實體魚骨圖\n我的修改：${value('fishboneNotes')||'未填寫'}\n\n提示使用：${[...usedHints].join('、')||'未使用'}\n\n提醒：AI 回答不能代替查證。`}
+function report(){const task=value('taskChoice')==='fishbone'?'任務二：利用 AI 資料優化實體魚骨圖\n我的修改：'+(value('fishboneNotes')||'未填寫'):'任務一：用自己的話改寫一至兩句\n事例說明了：'+(value('meaning')||'未填寫')+'\n因為：'+(value('because')||'未填寫')+'\n我的改寫：'+(value('rewrite')||'未填寫');return `事理與事例｜AI 小助手（基礎版）\n===========================\n文章題目：提高寫作能力的秘訣\n段落中心思想／事理：\n${value('idea')||'未填寫'}\n\n事例年代：${value('era')}\n事例地區：${value('region')}\n\nAI 提供的真實事例：\n${value('example')||'未填寫'}\n\n事例能支持事理嗎？${radio('fit')}\n\n選做任務（只需完成其一）：\n${task}\n\n提示使用：${[...usedHints].join('、')||'未使用'}\n\n提醒：AI 回答不能代替查證。`}
 $('generate').addEventListener('click',()=>{$('result').textContent=report();status('已整理完成，請檢查答案。')});
 $('copyrecord').addEventListener('click',()=>copyText(report()));
 $('download').addEventListener('click',()=>{const blob=new Blob(['\ufeff'+report()],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='事理與事例_基礎版_學習紀錄.txt';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500);status('學習紀錄已下載，請檢查「下載項目」。')});
-$('clear').addEventListener('click',()=>{if(!confirm('確定清除所有答案？請先下載學習紀錄。'))return;document.querySelectorAll('input:not([type]),input[type="text"],textarea').forEach(e=>e.value='');document.querySelectorAll('input[type="radio"]').forEach(e=>e.checked=false);$('result').textContent='按下面的「整理我的答案」，就能看到你完成的內容。';$('promptArea').hidden=true;$('ideaChoice').selectedIndex=0;$('idea').value=value('ideaChoice');$('era').selectedIndex=0;$('region').selectedIndex=0;usedHints.clear();['rewriteHint1','rewriteHint2','fishHintPanel','copyFishHint'].forEach(id=>$(id).hidden=true);['rewriteHint1Btn','rewriteHint2Btn','fishHintBtn'].forEach(id=>$(id).setAttribute('aria-expanded','false'));status('已清除。')});
+$('clear').addEventListener('click',()=>{if(!confirm('確定清除所有答案？請先下載學習紀錄。'))return;document.querySelectorAll('input:not([type]),input[type="text"],textarea').forEach(e=>e.value='');document.querySelectorAll('input[type="radio"]').forEach(e=>e.checked=false);$('result').textContent='按下面的「整理我的答案」，就能看到你完成的內容。';$('promptArea').hidden=true;$('ideaChoice').selectedIndex=0;$('idea').value=value('ideaChoice');$('era').selectedIndex=0;$('region').selectedIndex=0;$('taskChoice').selectedIndex=0;switchTask();usedHints.clear();['rewriteHint1','rewriteHint2','fishHintPanel','copyFishHint'].forEach(id=>$(id).hidden=true);['rewriteHint1Btn','rewriteHint2Btn','fishHintBtn'].forEach(id=>$(id).setAttribute('aria-expanded','false'));status('已清除。')});
 </script>
 </body></html>
